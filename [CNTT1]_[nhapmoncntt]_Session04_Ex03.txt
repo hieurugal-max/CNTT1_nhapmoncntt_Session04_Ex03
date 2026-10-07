@@ -1,0 +1,17 @@
+Phần 1: Chuỗi lệnh Windows PowerShell
+1. Tạo cây thư mục dự án (dùng -Force để tạo tự động các thư mục cha)
+New-Item -ItemType Directory -Path ".\Farm-Manager\code\app", ".\Farm-Manager\database\db", ".\Farm-Manager\logs\guides" -Force
+2. Tạo 3 file rỗng trong thư mục app
+New-Item -ItemType File -Path ".\Farm-Manager\code\app\main.py", ".\Farm-Manager\code\app\models.py", ".\Farm-Manager\code\app\utils.py"
+3. Sao chép đệ quy thư mục logs sang logs-backup (dùng -Recurse để chép cả thư mục con và file bên trong)
+Copy-Item -Path ".\Farm-Manager\logs" -Destination ".\Farm-Manager\logs-backup" -Recurse
+Giải thích tham số:
+-Force: Ép buộc tạo toàn bộ cấu trúc thư mục lồng nhau mà không bị báo lỗi nếu thư mục cha chưa tồn tại.
+-Recurse: Sao chép đệ quy, đảm bảo bê nguyên toàn bộ thư mục con (như guides) và các file bên trong sang thư mục mới.
+Phần 2: Kiểm thử và Giải thích
+Lệnh kiểm tra cấu trúc thư mục sau khi tạo:
+Get-ChildItem -Path ".\Farm-Manager" -Recurse
+Giải thích lý do dùng đường dẫn tương đối (.):
+Tính linh hoạt: Giúp câu lệnh chạy được ở bất kỳ máy tính hay thư mục làm việc nào mà không phụ thuộc vào tên người dùng hay tên ổ đĩa (C:, D:).
+Dễ chuyển giao: Khi đưa script cho người khác hoặc đẩy lên Git, dự án vẫn hoạt động đúng vị trí hiện tại mà không bị lỗi gắn cứng đường dẫn (hard-code).
+
